@@ -21,6 +21,9 @@ add_custom_command(OUTPUT xbmcremote.h
                    COMMENT "Generating Client XBMC Stubfile"
                    VERBATIM)
 
+find_package(JSONCPP REQUIRED)
+
+include_directories("${JSONCPP_INCLUDE_DIRS}")
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 
@@ -38,6 +41,6 @@ IF(COMPILE_STUBGEN)
     add_executable(stubserversample stubserver.cpp abstractstubserver.h)
     target_link_libraries(stubserversample jsonrpcserver)
 
-    add_executable(xbmcremote xbmcremote.cpp xbmcremote.h)
-    target_link_libraries(xbmcremote jsonrpcclient)
+    #add_executable(xbmcremote xbmcremote.cpp xbmcremote.h)
+    #target_link_libraries(xbmcremote jsonrpcclient)
 ENDIF()

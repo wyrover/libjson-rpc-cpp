@@ -30,6 +30,7 @@ set(server_connector_header "")
 set(server_connector_libs   "")
 
 include_directories("${PROJECT_SOURCE_DIR}/src/")
+include_directories("${JSONCPP_INCLUDE_DIRS}")
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -53,13 +54,14 @@ IF(HTTP_SERVER_MONGOOSE)
     list(APPEND server_connector_source "server/connectors/mongoose.c")
     list(APPEND server_connector_header "server/connectors/httpserver.h")
     list(APPEND server_connector_source "server/connectors/httpserver.cpp")
-    list(APPEND server_connector_libs ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+    list(APPEND server_connector_libs ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT} ws2_32)
 ENDIF()
 
 IF(SOCKET_CLIENT)
     find_package(Threads REQUIRED)
     list(APPEND client_connector_header "client/connectors/socketclient.h")
     list(APPEND client_connector_source "client/connectors/socketclient.cpp")
+    list(APPEND client_connector_libs ws2_32)
 ENDIF()
 
 IF(SOCKET_SERVER)

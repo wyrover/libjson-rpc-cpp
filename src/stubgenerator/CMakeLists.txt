@@ -2,10 +2,13 @@ file(GLOB_RECURSE jsonrpcstub_source *.cpp)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 
+find_package(JSONCPP REQUIRED)
 find_package(Argtable REQUIRED)
 
 add_executable(jsonrpcstub ${jsonrpcstub_source})
 target_link_libraries(jsonrpcstub jsonrpccommon ${ARGTABLE_LIBRARIES})
+
+include_directories("${JSONCPP_INCLUDE_DIRS}")
 
 #Generate manpage
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
