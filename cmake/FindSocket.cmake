@@ -4,7 +4,7 @@
 #  Socket_FOUND
 
 if(${CMAKE_SYSTEM} MATCHES "Windows")
-  SET(Socket_LIBRARIES wsock32 ws2_32)
+  SET(Socket_LIBRARIES ws2_32)
   SET(Socket_FOUND 1)
 elseif(${CMAKE_SYSTEM} MATCHES "INtime")
   SET(Socket_LIBRARIES netlib)
