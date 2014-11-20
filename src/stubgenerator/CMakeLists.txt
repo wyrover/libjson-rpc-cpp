@@ -23,6 +23,20 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     add_dependencies(jsonrpcstub manpage)
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+add_custom_command(TARGET jsonrpcstub
+                   PRE_BUILD
+                   COMMAND cmake ARGS -E copy ${JSONCPP_LIBRARIES} ${CMAKE_BINARY_DIR}/bin
+                   COMMENT "Copying libjsoncpp.dll"
+                   VERBATIM)
+
+add_custom_command(TARGET jsonrpcstub
+                   PRE_BUILD
+                   COMMAND cmake ARGS -E copy ${ARGTABLE_LIBRARIES} ${CMAKE_BINARY_DIR}/bin
+                   COMMENT "Copying libargtable2.dll"
+                   VERBATIM)
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+
 install(TARGETS jsonrpcstub LIBRARY DESTINATION lib
                       ARCHIVE DESTINATION lib
                       RUNTIME DESTINATION bin)
