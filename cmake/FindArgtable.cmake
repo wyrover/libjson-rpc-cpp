@@ -1,48 +1,34 @@
-# - Try to find ARGTABLE
-# Once done this will define
+# Find argtable
 #
-#  ARGTABLE_FOUND - system has ARGTABLE
-#  ARGTABLE_INCLUDES - the ARGTABLE include directory
-#  ARGTABLE_LIBRARY - Link these to use ARGTABLE
+# Find the argtable includes and library
+# 
+# if you nee to add a custom library search path, do it via via CMAKE_PREFIX_PATH 
+# 
+# This module defines
+#  ARGTABLE_INCLUDE_DIRS, where to find header, etc.
+#  ARGTABLE_LIBRARIES, the libraries needed to use gmp.
+#  ARGTABLE_FOUND, If false, do not try to use gmp.
 
-FIND_LIBRARY (ARGTABLE_LIBRARIES NAMES argtable2
-    PATHS
-    ENV LD_LIBRARY_PATH
-    ENV LIBRARY_PATH
-    /usr/lib64
-    /usr/lib
-    /usr/local/lib64
-    /usr/local/lib
-    /opt/local/lib
-	 ${ARGTABLE_ROOT}/lib
-	${CMAKE_SOURCE_DIR}/win32-deps/lib
-    )
+# only look in default directories
+find_path(
+	ARGTABLE_INCLUDE_DIR 
+	NAMES argtable.h
+	DOC "argtable include dir"
+	)
 
-FIND_PATH (ARGTABLE_INCLUDE_DIRS argtable2.h
-    ENV CPATH
-	${ARGTABLE_ROOT}/include
-    /usr/include
-    /usr/local/include
-    /opt/local/include
-	${CMAKE_SOURCE_DIR}/win32-deps/include
+find_library(
+	ARGTABLE_LIBRARY
+	NAMES argtable2
+	DOC "argtable library"
+	)
 
-    )
+set(ARGTABLE_INCLUDE_DIRS ${ARGTABLE_INCLUDE_DIR})
+set(ARGTABLE_LIBRARIES ${ARGTABLE_LIBRARY})
 
-IF(ARGTABLE_INCLUDE_DIRS AND ARGTABLE_LIBRARIES)
-    SET(ARGTABLE_FOUND TRUE)
-ENDIF(ARGTABLE_INCLUDE_DIRS AND ARGTABLE_LIBRARIES)
+# handle the QUIETLY and REQUIRED arguments and set ARGTABLE_FOUND to TRUE
+# if all listed variables are TRUE, hide their existence from configuration view
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(argtable DEFAULT_MSG
+	ARGTABLE_INCLUDE_DIR ARGTABLE_LIBRARY)
+mark_as_advanced (ARGTABLE_INCLUDE_DIR ARGTABLE_LIBRARY)
 
-IF(ARGTABLE_FOUND)
-  IF(NOT ARGTABLE_FIND_QUIETLY)
-    MESSAGE(STATUS "Found ARGTABLE: ${ARGTABLE_LIBRARIES}")
-  ENDIF(NOT ARGTABLE_FIND_QUIETLY)
-ELSE(ARGTABLE_FOUND)
-  IF(ARGTABLE_FIND_REQUIRED)
-    MESSAGE(FATAL_ERROR "Could not find ARGTABLE")
-  ENDIF(ARGTABLE_FIND_REQUIRED)
-ENDIF(ARGTABLE_FOUND)
-
-MARK_AS_ADVANCED(
-  ARGTABLE_LIBRARIES
-  ARGTABLE_INCLUDE_DIRS
-  )
