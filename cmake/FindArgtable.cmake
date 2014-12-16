@@ -12,7 +12,7 @@
 # only look in default directories
 find_path(
 	ARGTABLE_INCLUDE_DIR 
-	NAMES argtable.h
+	NAMES argtable2.h
 	DOC "argtable include dir"
 	)
 
